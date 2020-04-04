@@ -25,9 +25,12 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
     );
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->get('/', function () use ($router) {
-            return $router->app->version();
-        });
+        $router->post(
+            '/upload',
+            [
+                'uses' => 'UploadController@create'
+            ]
+        );
     });
 
 }
