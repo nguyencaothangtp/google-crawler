@@ -25,8 +25,9 @@ services:
       - ${NGINX_PORT}:80
     volumes:
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini # mapping php.ini
-      #      - ./docker/supervisord/supervisord.conf:/etc/supervisor/supervisord.conf # mapping supervisord.conf
-      - ./log:/var/log/nginx
+      - ./docker/supervisord/supervisord.conf:/etc/supervisor/supervisord.conf # mapping supervisord.conf
+      - ./log/nginx:/var/log/nginx
+      - ./log/worker:/var/www/html/storage/logs/worker
       - ./:/var/www/html
     command: >
       bash -c "cd /var/www/html && composer install --prefer-dist && cp .env.example .env &&
