@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Helpers\Helper;
+
 class CrawlSiteJob extends Job
 {
     /**
@@ -9,16 +11,16 @@ class CrawlSiteJob extends Job
      *
      * @param string
      */
-    private $file;
+    private $filePath;
 
     /**
      * Create a new job instance.
      *
-     * @param string $file
+     * @param string $filePath
      */
-    public function __construct(string $file)
+    public function __construct(string $filePath)
     {
-        $this->file = $file;
+        $this->filePath = $filePath;
     }
 
     /**
@@ -28,6 +30,6 @@ class CrawlSiteJob extends Job
      */
     public function handle()
     {
-        //
+        $keywords = Helper::readCSV($this->filePath);
     }
 }
