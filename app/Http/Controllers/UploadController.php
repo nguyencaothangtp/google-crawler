@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\FileException;
+use App\Helpers\Helper;
 use App\Jobs\CrawlSiteJob;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -52,7 +53,7 @@ class UploadController extends Controller
         $file->move(storage_path('csv'), $file->getClientOriginalName());
 
         // Send to Worker to process background jobs
-        $filePath = storage_path('csv') . $file->getClientOriginalName();
+        $filePath = storage_path('csv') . '/' . $file->getClientOriginalName();
         $this->dispatch(new CrawlSiteJob($filePath));
 
         return response()->json([
