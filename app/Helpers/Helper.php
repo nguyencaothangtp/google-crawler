@@ -91,7 +91,7 @@ class Helper
             $response = $googleClient->query($googleUrl);
 
             $result['keyword'] = $keyword;
-            $result['adwords_num'] = $response->cssQuery('.ads-ad')->count() ?: 0; // Total number of AdWords advertisers
+            $result['adwords_num'] = $response->getAdwordsResults()->count() ?: 0; // Total number of AdWords advertisers
             $result['links_num'] = $response->cssQuery('a')->count() ?: 0; // Total number of links on the page
             $result['search_results_num'] = $response->getNumberOfResults() ?: 0; // Total of search results for this keyword
             $result['html_content'] = $response->getDom()->saveHTML() ?: ''; // HTML code of the page/cache of the page.
