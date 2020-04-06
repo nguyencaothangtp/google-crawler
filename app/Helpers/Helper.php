@@ -65,6 +65,8 @@ class Helper
      */
     public static function crawlGoogleByKeyword(string $keyword)
     {
+        $keyword = trim($keyword);
+
         $userAgent = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36";
         $browserLanguage = "en-EN";
 
@@ -78,19 +80,21 @@ class Helper
         $googleUrl->setSearchTerm($keyword);
 
         $result = [
-            'ads' => 0,
-            'links' => 0,
-            'totalSearch' => 0,
-            'html' => '',
+            'keyword' => '',
+            'adwords_num' => 0,
+            'links_num' => 0,
+            'search_results_num' => 0,
+            'html_content' => '',
         ];
 
         try {
             $response = $googleClient->query($googleUrl);
 
-            $result['ads'] = $response->cssQuery('.ads-ad')->count() ?: 0; // Total number of AdWords advertisers
-            $result['links'] = $response->cssQuery('a')->count() ?: 0; // Total number of links on the page
-            $result['totalSearch'] = $response->getNumberOfResults() ?: 0; // Total of search results for this keyword
-            $result['html'] = $response->getDom()->saveHTML() ?: ''; // HTML code of the page/cache of the page.
+            $result['keyword'] = $keyword;
+            $result['adwords_num'] = $response->cssQuery('.ads-ad')->count() ?: 0; // Total number of AdWords advertisers
+            $result['links_num'] = $response->cssQuery('a')->count() ?: 0; // Total number of links on the page
+            $result['search_results_num'] = $response->getNumberOfResults() ?: 0; // Total of search results for this keyword
+            $result['html_content'] = $response->getDom()->saveHTML() ?: ''; // HTML code of the page/cache of the page.
 
         } catch (RequestErrorException $e) {
             throw CrawlException::error($e->getMessage());
