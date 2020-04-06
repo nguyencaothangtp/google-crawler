@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8acea1c26bee6f9cc1ccb8eee77903e4",
+    "content-hash": "f722fce96a9024c0e640bb9b3f48633c",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1581,6 +1581,49 @@
                 "lumen"
             ],
             "time": "2019-08-28T21:21:05+00:00"
+        },
+        {
+            "name": "matthenning/eloquent-api-filter",
+            "version": "v1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthenning/eloquent-api-filter.git",
+                "reference": "df3e8b3694c65cce9de1a25a1cb2860585ea465c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthenning/eloquent-api-filter/zipball/df3e8b3694c65cce9de1a25a1cb2860585ea465c",
+                "reference": "df3e8b3694c65cce9de1a25a1cb2860585ea465c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": ">=5.4",
+                "illuminate/http": ">=5.4",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Matthenning\\EloquentApiFilter": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Henning",
+                    "email": "pub@matthias-henning.de"
+                }
+            ],
+            "description": "Awesome and simple way to filter Eloquent queries right from the API call url",
+            "keywords": [
+                "api",
+                "eloquent",
+                "filtering"
+            ],
+            "time": "2019-11-26T11:26:59+00:00"
         },
         {
             "name": "monolog/monolog",

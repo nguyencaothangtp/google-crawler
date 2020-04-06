@@ -17,24 +17,6 @@ class UploadController extends Controller
     public $allowTypes = ['csv'];
 
     /**
-     * The request instance.
-     *
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
      * Upload file.
      *
      * @return mixed

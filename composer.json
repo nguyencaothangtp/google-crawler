@@ -9,6 +9,7 @@
         "firebase/php-jwt": "^5.2",
         "guzzlehttp/psr7": "^1.6",
         "laravel/lumen-framework": "5.8.*",
+        "matthenning/eloquent-api-filter": "^1.4",
         "serps/http-client-curl": "^0.2.3",
         "serps/search-engine-google": "^0.4.8",
         "symfony/css-selector": "4.4.x"
