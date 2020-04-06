@@ -33,5 +33,22 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         );
     });
 
-}
-);
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        $router->get(
+            '/keyword-statistics/{id}',
+            [
+                'uses' => 'KeywordStatsController@get'
+            ]
+        );
+    });
+
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        $router->get(
+            '/keyword-statistics',
+            [
+                'uses' => 'KeywordStatsController@list'
+            ]
+        );
+    });
+
+});
