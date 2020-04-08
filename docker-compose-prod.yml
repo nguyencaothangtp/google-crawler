@@ -1,0 +1,53 @@
+version: "3"
+services:
+
+  # Postgres service
+  db:
+    image: postgres:12
+    container_name: crawl_google_db_prod
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    networks:
+      - google-crawler-prod
+
+  # PHP Service
+  lumen:
+    image: hdtitteam/google-crawler_lumen
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 81:80
+    volumes:
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d # disable xdebug for high performance
+      - ./docker/supervisord/supervisord.conf:/etc/supervisor # mapping supervisord.conf
+      - ./log/nginx:/var/log/nginx
+      - ./log/worker:/var/www/html/storage/logs/worker
+      - ./:/var/www/html
+    container_name: google-crawler-api-production
+    command: >
+      bash -c "cd /var/www/html && composer install --prefer-dist &&
+              php artisan migrate &&
+              /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - google-crawler-prod
+
+volumes:
+  db_data:
+
+networks:
+  google-crawler-prod:
+    driver: bridge
