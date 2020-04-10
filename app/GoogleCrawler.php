@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Helpers;
-
+namespace App;
 
 use App\Exceptions\CrawlException;
 use Serps\Core\Browser\Browser;
@@ -12,49 +11,8 @@ use Serps\SearchEngine\Google\Exception\InvalidDOMException;
 use Serps\SearchEngine\Google\GoogleClient;
 use Serps\SearchEngine\Google\GoogleUrl;
 
-class Helper
+class GoogleCrawler
 {
-    /**
-     * Read Csv file and return result in array
-     *
-     * @param string $filePath
-     * @return array
-     */
-    public static function readCSV(string $filePath)
-    {
-        $result = [];
-
-        $handle = fopen($filePath, 'r');
-
-        while (($data = fgetcsv($handle, 0, ',')) !== false) {
-            $result[] = $data;
-        }
-
-        $result = call_user_func_array('array_merge', $result);
-        $result = self::removeEmptyElement($result);
-
-        fclose($handle);
-
-        return $result;
-    }
-
-    /**
-     * Remove empty element in an array
-     *
-     * @param array $arr
-     * @return array
-     */
-    public static function removeEmptyElement(array $arr)
-    {
-        foreach ($arr as $index => $element) {
-            if (empty($element) || $element === '') {
-                unset($arr[$index]);
-            }
-        }
-
-        return array_values($arr);
-    }
-
     /**
      * Get keyword results by Google search engine
      *
@@ -63,7 +21,7 @@ class Helper
      * @throws Exception
      * @throws InvalidDOMException
      */
-    public static function crawlGoogleByKeyword(string $keyword)
+    public function crawlByKeyword(string $keyword)
     {
         $keyword = trim($keyword);
 
