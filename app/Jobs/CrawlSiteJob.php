@@ -2,8 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Csv;
 use App\Exceptions\CrawlException;
-use App\Helpers\Helper;
+use App\GoogleCrawler;
 use App\KeywordStatistic;
 use Serps\Exception;
 use Serps\SearchEngine\Google\Exception\InvalidDOMException;
@@ -36,10 +37,12 @@ class CrawlSiteJob extends Job
      */
     public function handle()
     {
-        $keywords = Helper::readCSV($this->filePath);
+        $csv = new Csv($this->filePath);
+        $keywords = $csv->readCSV();
+        $crawler = new GoogleCrawler();
         foreach ($keywords as $keyword) {
             try {
-                $keywordStats = Helper::crawlGoogleByKeyword($keyword);
+                $keywordStats = $crawler->crawlByKeyword($keyword);
 
                 //Save keyword statistics to database
                 KeywordStatistic::create($keywordStats);
